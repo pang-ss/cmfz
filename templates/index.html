@@ -15,6 +15,9 @@
     <script src="{% static 'jqgrid/js/trirand/src/jquery.jqGrid.js' %}"></script>
     <script src="{% static 'jqgrid/js/trirand/i18n/grid.locale-cn.js' %}"></script>
     <script src="{% static 'boot/js/ajaxfileupload.js' %}"></script>
+    <script src="{% static 'echarts/echarts.min.js' %}"></script>
+    <script src="{% static 'echarts/china.js' %}"></script>
+
 </head>
 <body>
 <!-- 导航条 -->
@@ -57,7 +60,21 @@
                     <div id="aa" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
-
+                                <li>
+                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/user.html' %}')"
+                                       style="font-weight: bold">用户列表
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/echarts.html' %}')"
+                                       style="font-weight: bold">用户注册趋势图
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/map.html' %}')"
+                                       style="font-weight: bold">用户分布图
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -112,7 +129,9 @@
                             <ul class="nav nav-pills nav-stacked">
                                 <li>
                                     <a href="javascript:$('#centerLayout').load('{% static 'static_html/banner.html' %}')"
-                                       style="font-weight: bold">轮播图列表</a></li>
+                                       style="font-weight: bold">轮播图列表
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>

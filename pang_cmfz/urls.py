@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('show/', include('pss_show.urls')),
     path('banner/', include('pss_banner.urls')),
+    path('user/', include('pss_user.urls')),
 ]

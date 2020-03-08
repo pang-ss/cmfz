@@ -44,8 +44,13 @@ def get_banner(request):
 
 
 def mydefault(e):
-    if isinstance(e,TPicture):
-        return {'id': e.id, "title": e.description, "status": e.status, "pic": str(e.picture), "create_time": e.datetime}
+    if isinstance(e, TPicture):
+        # 判断轮播图的显示状态 e.status 等于1是显示
+        # print(e.status)
+        # print(type(e.status))
+        if e.status == "1":
+            return {'id': e.id, "title": e.description, "status": "显示", "pic": str(e.picture), "create_time": e.datetime}
+        return {'id': e.id, "title": e.description, "status": "不显示", "pic": str(e.picture), "create_time": e.datetime}
 
 
 # 修改轮播图信息

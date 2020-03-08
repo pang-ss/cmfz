@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pss_show',
     'pss_banner',
+    'pss_user',
 ]
 
 MIDDLEWARE = [

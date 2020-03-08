@@ -105,7 +105,9 @@ class TUser(models.Model):
     signature = models.CharField(max_length=20, blank=True, null=True)
     sex = models.CharField(max_length=20, blank=True, null=True)
     number = models.CharField(max_length=20, blank=True, null=True)
-    space = models.CharField(max_length=20, blank=True, null=True)
+    status = models.CharField(max_length=20, blank=True, null=True)
+    address_item = models.CharField(max_length=50, blank=True, null=True)
+    regist_time = models.DateField(blank=True, null=True)
 
     class Meta:
         db_table = 't_user'
