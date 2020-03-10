@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'pss_show',
     'pss_banner',
     'pss_user',
+    'pss_article',
 ]
 
 MIDDLEWARE = [

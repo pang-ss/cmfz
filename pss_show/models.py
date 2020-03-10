@@ -31,10 +31,10 @@ class TAlbum(models.Model):
 class TArticle(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=20, blank=True, null=True)
-    picture = models.ImageField(upload_to="img")
-    date = models.DateField(blank=True, null=True)
+    release_time = models.CharField(max_length=20, blank=True, null=True)
+    upload_time = models.CharField(max_length=20, blank=True, null=True)
     content = models.CharField(max_length=5000, blank=True, null=True)
-    image = models.CharField(max_length=50, blank=True, null=True)
+    status = models.CharField(max_length=50, blank=True, null=True)
     guru_id = models.IntegerField(blank=True, null=True)
 
     class Meta:

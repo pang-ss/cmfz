@@ -10,28 +10,28 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='tuser',
-            name='space',
-        ),
-        migrations.AddField(
-            model_name='tpicture',
-            name='datetime',
-            field=models.CharField(blank=True, max_length=20, null=True),
-        ),
-        migrations.AddField(
-            model_name='tuser',
-            name='address_item',
-            field=models.CharField(blank=True, max_length=50, null=True),
-        ),
-        migrations.AddField(
-            model_name='tuser',
-            name='regist_time',
-            field=models.DateField(blank=True, null=True),
-        ),
-        migrations.AddField(
-            model_name='tuser',
-            name='status',
-            field=models.CharField(blank=True, max_length=20, null=True),
-        ),
+        # migrations.RemoveField(
+        #     model_name='tuser',
+        #     name='space',
+        # ),
+        # migrations.AddField(
+        #     model_name='tpicture',
+        #     name='datetime',
+        #     field=models.CharField(blank=True, max_length=20, null=True),
+        # ),
+        # migrations.AddField(
+        #     model_name='tuser',
+        #     name='address_item',
+        #     field=models.CharField(blank=True, max_length=50, null=True),
+        # ),
+        # migrations.AddField(
+        #     model_name='tuser',
+        #     name='regist_time',
+        #     field=models.DateField(blank=True, null=True),
+        # ),
+        # migrations.AddField(
+        #     model_name='tuser',
+        #     name='status',
+        #     field=models.CharField(blank=True, max_length=20, null=True),
+        # ),
     ]
