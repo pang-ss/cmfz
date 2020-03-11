@@ -22,4 +22,5 @@ urlpatterns = [
     path('banner/', include('pss_banner.urls')),
     path('user/', include('pss_user.urls')),
     path('article/', include('pss_article.urls')),
+    path('album/', include('pss_album.urls')),
 ]

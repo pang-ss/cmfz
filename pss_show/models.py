@@ -15,14 +15,15 @@ class TAdmin(models.Model):
 class TAlbum(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=20, blank=True, null=True)
-    picture = models.ImageField(upload_to="img")
+    picture = models.ImageField(upload_to="image")
     level = models.CharField(max_length=20, blank=True, null=True)
     author = models.CharField(max_length=20, blank=True, null=True)
     teller = models.CharField(max_length=20, blank=True, null=True)
     number = models.CharField(max_length=20, blank=True, null=True)
     content = models.CharField(max_length=5000, blank=True, null=True)
-    datetime = models.DateField(blank=True, null=True)
-    space = models.CharField(max_length=20, blank=True, null=True)
+    release_time = models.DateField(blank=True, null=True)
+    upload_time = models.DateField(blank=True, null=True)
+    status = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         db_table = 't_album'
@@ -45,8 +46,9 @@ class TChapter(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=20, blank=True, null=True)
     size = models.CharField(max_length=20, blank=True, null=True)
-    audio = models.CharField(max_length=100, blank=True, null=True)
-    download = models.CharField(max_length=50, blank=True, null=True)
+    url = models.FileField(upload_to="audio")
+    duration = models.CharField(max_length=50, blank=True, null=True)
+    create_time = models.DateField(blank=True, null=True)
     album_id = models.IntegerField(blank=True, null=True)
 
     class Meta:

@@ -65,7 +65,6 @@
                 // 根据返回值判断是否上传成功，上传成功隐藏模态框
                 if (resp === "ok") {
                     $("#myModal").modal("hide");
-                    $('#bannerTable').load('/static_html/banner.html')
                 } else {
                     alert("添加失败")
                 }
@@ -99,6 +98,11 @@
 </div>
 <ul class="nav nav-tabs ">
     <li class="active"><a href="#"><b>轮播图信息</b></a></li>
+    <li>
+        <button class="btn btn-primary" data-aa="@456" data-whatever="@123" id="btn" data-toggle="modal"
+                data-target="#myModal">添加
+        </button>
+    </li>
 </ul>
 
 <div class="panel panel-default" style="padding: 40px">
@@ -112,9 +116,7 @@
     </div>
     <div id="bannerPagerNew" style="width: auto;height: 50px"></div>
     <!--模态框的打开方式  可以使用modal方法打开 也可以通过指定data-target与data-toggle两个属性来打开指定的模态框 -->
-    <button class="btn btn-primary" data-aa="@456" data-whatever="@123" id="btn" data-toggle="modal"
-            data-target="#myModal">添加
-    </button>
+
 
 </div>
 
