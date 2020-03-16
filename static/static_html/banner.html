@@ -3,7 +3,7 @@
         url: "/banner/get_banner/",
         datatype: "json",
         autowidth: true,
-        height:"300",
+        height: "300",
         pager: "#bannerPagerNew",
         viewrecords: true,
         rownumbers: true,
@@ -16,9 +16,11 @@
         colModel: [
             {name: "id", align: "center"},
             {name: "title", align: "center", editable: true},
-            {name: "status", align: "center", editable: true,edittype:'select',editoptions: {
-                value: '0:不显示;1:显示'
-                }},
+            {
+                name: "status", align: "center", editable: true, edittype: 'select', editoptions: {
+                    value: '0:不显示;1:显示'
+                }
+            },
             {name: "create_time", align: "center"},
             // 回显图片
             {
@@ -30,15 +32,14 @@
             {
                 name: "option", align: "center", formatter: function (cellvalue, options, rowObject) {
                     console.log(rowObject.id);
-                    var content = "<button onclick='changefn(" + rowObject.id + ")' class=\"btn btn-warning\" id=\"edit\"><span class=\"glyphicon glyphicon-edit\"></span> 修改</button>"
-                        + "<button onclick='delfn(" + rowObject.id + ")' class=\"btn btn-danger\" id=\"del\"><span class=\"glyphicon glyphicon-edit\"></span>删除</button>";
+                    var per = bannerCheckPer('/banner/change_banner/')
+                    var content = "<button " + per + " onclick='changefn(" + rowObject.id + ")' class=\"btn btn-warning\" id=\"edit\"><span class=\"glyphicon glyphicon-edit\"></span> 修改</button>"
+                        + "<button " + per + "  onclick='delfn(" + rowObject.id + ")' class=\"btn btn-danger\" id=\"del\"><span class=\"glyphicon glyphicon-edit\"></span>删除</button>";
                     return content;
                 }
             },
         ],
-    }).jqGrid('navGrid', '#bannerPagerNew', {add:false,reload:false,search: false});
-
-
+    }).jqGrid('navGrid', '#bannerPagerNew', {add: false, reload: false, search: false});
 
 
     // 点击模态框的保存按钮  将轮播图的信息发送到后台进行保存
@@ -65,7 +66,7 @@
                 // 根据返回值判断是否上传成功，上传成功隐藏模态框
                 if (resp === "ok") {
                     $("#myModal").modal("hide");
-                } else {
+                }  else {
                     alert("添加失败")
                 }
             }
@@ -76,8 +77,8 @@
     //点击表格内修改按钮
     function changefn(num) {
         jQuery("#bannerTable").jqGrid('editGridRow', num, {
-          reloadAfterSubmit : true,
-          closeAfterEdit: true
+            reloadAfterSubmit: true,
+            closeAfterEdit: true
         });
     }
 
@@ -90,12 +91,20 @@
     }
 
 
+    function bannerCheckPer(uri) {
+        if (session_per_list.includes(uri)) {
+            return '';
+        } else {
+            return per = 'disabled style="cursor:not-allowed"';
+        }
+    }
 </script>
 
 
 <div class="page-header">
     <h2>轮播图管理</h2>
 </div>
+
 <ul class="nav nav-tabs ">
     <li class="active"><a href="#"><b>轮播图信息</b></a></li>
     <li>
@@ -103,6 +112,7 @@
                 data-target="#myModal">添加
         </button>
     </li>
+
 </ul>
 
 <div class="panel panel-default" style="padding: 40px">

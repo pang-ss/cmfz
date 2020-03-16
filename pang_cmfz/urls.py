@@ -23,4 +23,6 @@ urlpatterns = [
     path('user/', include('pss_user.urls')),
     path('article/', include('pss_article.urls')),
     path('album/', include('pss_album.urls')),
+    path('rbac/', include('rbac.urls')),
+    path('test/', include('pss_test.urls')),
 ]

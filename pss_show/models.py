@@ -37,6 +37,7 @@ class TArticle(models.Model):
     content = models.CharField(max_length=5000, blank=True, null=True)
     status = models.CharField(max_length=50, blank=True, null=True)
     guru_id = models.IntegerField(blank=True, null=True)
+    type = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
         db_table = 't_article'
@@ -46,7 +47,7 @@ class TChapter(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=20, blank=True, null=True)
     size = models.CharField(max_length=20, blank=True, null=True)
-    url = models.FileField(upload_to="audio")
+    url = models.FileField(upload_to="audio",blank=True, null=True)
     duration = models.CharField(max_length=50, blank=True, null=True)
     create_time = models.DateField(blank=True, null=True)
     album_id = models.IntegerField(blank=True, null=True)
@@ -101,7 +102,7 @@ class TUser(models.Model):
     id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=20, blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
-    password = models.CharField(max_length=20, blank=True, null=True)
+    password = models.CharField(max_length=200, blank=True, null=True)
     image = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=20, blank=True, null=True)
     signature = models.CharField(max_length=20, blank=True, null=True)

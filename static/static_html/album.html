@@ -10,56 +10,56 @@
             viewrecords: true,
             pager: "#albumPager",
             rowNum: 4,
-            rowList: [4,5, 10, 15],
+            rowList: [4, 5, 10, 15],
             rownumbers: true,
             toolbar: [true, "top"],
-            colNames: ["编号", "标题", "分数", "作者", "播音员", "章节数", "专辑简介", "状态", "发行时间", "上传时间", "插图","操作"],
+            colNames: ["编号", "标题", "分数", "作者", "播音员", "章节数", "专辑简介", "状态", "发行时间", "上传时间", "插图", "操作"],
             colModel: [
                 {name: "id", hidden: true},
                 {
                     name: "title",
                     editable: true,
                     editrules: {required: true},
-                    align:"center",
+                    align: "center",
                 },
                 {
-                    name: "level", editable: true,align:"center",
+                    name: "level", editable: true, align: "center",
                     editrules: {required: true, number: true, minValue: 1, maxValue: 10}
                 },
                 {
-                    name: "author", editable: true,align:"center",
+                    name: "author", editable: true, align: "center",
                     editrules: {required: true}
                 },
                 {
-                    name: "teller", editable: true,align:"center",
+                    name: "teller", editable: true, align: "center",
                     editrules: {required: true}
                 },
                 {
-                    name: "number", editable: true,align:"center",
+                    name: "number", editable: true, align: "center",
                     editrules: {required: true, number: true, minValue: 1}
                 },
                 {
-                    name: "content", editable: true,align:"center",
+                    name: "content", editable: true, align: "center",
                     editrules: {required: true}
                 },
                 {
-                    name: "status", editable: true, edittype: "select",align:"center",
+                    name: "status", editable: true, edittype: "select", align: "center",
                     editoptions: {
                         value: "1:展示;2:不展示"
                     }
                 },
                 {
-                    name: "release_time", editable: true, edittype: "date",align:"center",
+                    name: "release_time", editable: true, edittype: "date", align: "center",
                     editrules: {required: true}
                 },
                 {
-                    name: "upload_time", editable: true, edittype: "date",align:"center",
+                    name: "upload_time", editable: true, edittype: "date", align: "center",
                     editrules: {required: true}
                 },
                 {
                     name: "picture",
                     editable: true,
-                    align:"center",
+                    align: "center",
                     edittype: "file",
                     editoptions: {
                         enctype: "multipart/form-data"
@@ -73,8 +73,9 @@
                     align: "center", fixed: true, width: 200,
                     formatter: function (cellvalue, options, rowObject) {
                         // 在次数追加两个按钮  删除  与  修改
-                        return '<a class="btn btn-primary" onclick="showChangeAlbum('+rowObject.id+')"> <span class="glyphicon glyphicon-edit"></span> 修改</a> ' +
-                            '<a class="btn btn-danger" onclick="delAlbum('+rowObject.id+')"> <span class="glyphicon glyphicon-edit"></span> 删除</a> ';
+                        var per = albumCheckPer('/album/edit_album/')
+                        return '<a '+per+'class="btn btn-primary" onclick="showChangeAlbum(' + rowObject.id + ')"> <span class="glyphicon glyphicon-edit"></span> 修改</a> ' +
+                            '<a '+per+' class="btn btn-danger" onclick="delAlbum(' + rowObject.id + ')"> <span class="glyphicon glyphicon-edit"></span> 删除</a> ';
                     }
                 },
             ],
@@ -84,13 +85,23 @@
                 addSubGrid(subGridId, albumId);     // 完成二级表格的生成
             }
         }).jqGrid("navGrid", "#albumPager", {
-                edit: false, del: true, search: false, refresh: true,add:false
+                edit: false, del: true, search: false, refresh: true, add: false
             },
         );
+
+        var add_per = albumCheckPer('/album/add_album/')
         // 追加添加按钮
-        $("#t_albumTable").append('<button class="btn btn-primary btn-sm" onclick="showAddAlbum()"> 添加专辑</button>')
+        $("#t_albumTable").append('<button '+add_per+' class="btn btn-primary btn-sm" onclick="showAddAlbum()"> 添加专辑</button>')
     });
 
+
+    function albumCheckPer(uri) {
+        if (session_per_list.includes(uri)) {
+            return '';
+        } else {
+            return per = 'disabled style="cursor:not-allowed"';
+        }
+    }
 
     //添加专辑 展示添加专辑模态框  完成专辑信息的填写
     function showAddAlbum() {
@@ -137,9 +148,9 @@
             success: function (resp) {
                 // 根据后台返回的状态码进行不同的处理
                 console.log(resp);
-                if(resp==="ok"){
+                if (resp === "ok") {
                     $("#albumModal").modal('hide');
-                }else{
+                } else {
                     alert("保存失败")
                 }
             }
@@ -148,7 +159,7 @@
 
     //点击表格内的修改按钮触发模态框回显
     function showChangeAlbum(num) {
-       console.log(num);
+        console.log(num);
         var data = $("#albumTable").jqGrid("getRowData", num);
         console.log(data);
         $('#title').val(data.title);
@@ -161,20 +172,20 @@
         $('#level').val(data.level);
         $('#picture').val(data.picture.src);
         //判断状态的值
-        if(data.status==="展示"){
+        if (data.status === "展示") {
             $("#status").val("1");
-        }else if(data.status==="不展示"){
+        } else if (data.status === "不展示") {
             $("#status").val("2");
         }
         $('#albumModal').modal('show');
-        $("#modal_footer").html('<button type="button" class="btn btn-primary" onclick="changeAlbum('+num+')">保存</button>\n' +
+        $("#modal_footer").html('<button type="button" class="btn btn-primary" onclick="changeAlbum(' + num + ')">保存</button>\n' +
             '<button type="button" class="btn btn-warning" data-dismiss="modal">取消</button>')
     }
 
     //点击模态框的保存触发
     function changeAlbum(id) {
         console.log(id);
-         // 通过formdata完成文件上传
+        // 通过formdata完成文件上传
         var title = $("#title").val();
         var author = $("#author").val();
         var teller = $("#teller").val();
@@ -209,9 +220,9 @@
             success: function (resp) {
                 // 根据后台返回的状态码进行不同的处理
                 console.log(resp);
-                if(resp==="ok"){
+                if (resp === "ok") {
                     $("#albumModal").modal('hide');
-                }else{
+                } else {
                     alert("保存失败")
                 }
             }
@@ -254,7 +265,7 @@
             toolbar: [true, "top"],
             colNames: ["编号", "标题", "大小", "时长", "上传时间", "音频", "操作"],
             colModel: [
-                {name: "id", align: "center",hidden: true},
+                {name: "id", align: "center", hidden: true},
                 {name: "title", align: "center"},
                 {name: "size", align: "center"},
                 {name: "duration", align: "center"},
@@ -267,24 +278,27 @@
                 {
                     name: "option", align: "center", formatter: function (cellvalue, options, rowObject) {
                         // 在次数追加两个按钮  删除  与  修改
-                        return '<a class="btn btn-primary" onclick="showChangeChapter('+rowObject.id+')"> <span class="glyphicon glyphicon-edit"></span> 修改</a> ' +
-                            '<a class="btn btn-danger" onclick="delChapter('+rowObject.id+')"> <span class="glyphicon glyphicon-edit"></span> 删除</a> ';
+                        var per = albumCheckPer('/album/edit_chapter/')
+                        return '<a '+per+' class="btn btn-primary" onclick="showChangeChapter(' + rowObject.id + ')"> <span class="glyphicon glyphicon-edit"></span> 修改</a> ' +
+                            '<a '+per+' class="btn btn-danger" onclick="delChapter(' + rowObject.id + ')"> <span class="glyphicon glyphicon-edit"></span> 删除</a> ';
                     }
                 },
             ],
 
-        }).jqGrid("navGrid", "#"+subGridPagerId, {
-                edit: false, del: true, search: false, refresh: true,add:false
-            },);
+        }).jqGrid("navGrid", "#" + subGridPagerId, {
+            edit: false, del: true, search: false, refresh: true, add: false
+        },);
+
+       var add_chapter_per = albumCheckPer('/album/add_chapter/');
         // 追加添加按钮
-        $("#t_albumTable_1table").append('<button class="btn btn-primary btn-sm" onclick="showAddChapter('+albumId+')"> 添加章节</button>')
+        $("#t_albumTable_1table").append('<button '+add_chapter_per+' class="btn btn-primary btn-sm" onclick="showAddChapter(' + albumId + ')"> 添加章节</button>')
     }
 
     // 展示添加章节的模态框
     function showAddChapter(albumId) {
         // 调用展示模态框的方法  信息填写后保存
         $('#chapterModal').modal('show');
-        $("#modal_footer2").html('<button type="button" class="btn btn-primary" onclick="addChapter('+albumId+')">保存</button>\n' +
+        $("#modal_footer2").html('<button type="button" class="btn btn-primary" onclick="addChapter(' + albumId + ')">保存</button>\n' +
             '<button type="button" class="btn btn-warning" data-dismiss="modal">取消</button>')
     }
 
@@ -309,9 +323,9 @@
             processData: false,     // 使数据不做处理
             success: function (resp) {
                 console.log(resp);
-                if(resp==="ok"){
+                if (resp === "ok") {
                     $("#chapterModal").modal('hide');
-                }else{
+                } else {
                     alert("保存失败")
                 }
             }
@@ -325,7 +339,7 @@
         $('#chapterTitle').val(data.title);
         $('#create_time').val(data.create_time);
         $('#chapterModal').modal('show');
-        $("#modal_footer2").html('<button type="button" class="btn btn-primary" onclick="changeChapter('+id+')">保存</button>\n' +
+        $("#modal_footer2").html('<button type="button" class="btn btn-primary" onclick="changeChapter(' + id + ')">保存</button>\n' +
             '<button type="button" class="btn btn-warning" data-dismiss="modal">取消</button>')
     }
 
@@ -350,16 +364,18 @@
             processData: false,     // 使数据不做处理
             success: function (resp) {
                 console.log(resp);
-                if(resp==="ok"){
+                if (resp === "ok") {
                     $("#chapterModal").modal('hide');
-                }else{
-                    alert("保存失败")
+                } else if (resp === "无权访问") {
+                    alert("无权访问")
+                } else {
+                    alert("保存失败");
                 }
             }
         })
     }
 
-     //点击表格内删除按钮
+    //点击表格内删除按钮
     function delChapter(num) {
         jQuery('#' + subGridTableId).jqGrid('delGridRow', num, {
             reloadAfterSubmit: true,
@@ -418,7 +434,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">作者</label>
                         <div class="col-sm-10">
-                            <input type="text" name="author" id="author"  class="form-control">
+                            <input type="text" name="author" id="author" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -446,13 +462,13 @@
                         </div>
                     </div>
 
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">上传时间</label>
                         <div class="col-sm-10">
                             <input type="date" name="upload_time" id="upload_time" class="form-control">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">发布时间</label>
                         <div class="col-sm-10">
                             <input type="date" name="release_time" id="release_time" class="form-control">
@@ -501,10 +517,11 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">标题</label>
                         <div class="col-sm-10">
-                            <input type="text" name="chapterTitle" id="chapterTitle" placeholder="请输入标题" class="form-control">
+                            <input type="text" name="chapterTitle" id="chapterTitle" placeholder="请输入标题"
+                                   class="form-control">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">上传时间</label>
                         <div class="col-sm-10">
                             <input type="date" name="create_time" id="create_time" class="form-control">

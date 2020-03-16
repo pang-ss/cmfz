@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'pss_user',
     'pss_article',
     'pss_album',
+    'rbac',
+    'pss_test',
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rbac.service.check_permission.CheckPermission',
 ]
 
 ROOT_URLCONF = 'pang_cmfz.urls'
@@ -138,3 +142,8 @@ APIKEY = "40d6180426417bfc57d0744a362dc108"
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+# 用户权限列表
+PERMISSION_LIST = "permission_url_list"
+
+# 用户菜单列表
+MENU_LIST = "menu_list"

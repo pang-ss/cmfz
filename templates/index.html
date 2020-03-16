@@ -21,7 +21,19 @@
     <script src="{% static 'kindeditor/lang/zh-CN.js' %}"></script>
 
 </head>
+<script>
+    let session_per_list;
+    function myfun() {
+        session_per_list = $('#session_per_list').text();
+        console.log("session  ", session_per_list);
+    }
+
+    window.onload = myfun;
+
+</script>
 <body>
+<span id="session_per_list" style="display: none">{{ per_list }}</span>
+
 <!-- 导航条 -->
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -61,23 +73,13 @@
                     </div>
                     <div id="aa" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li>
-                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/user.html' %}')"
-                                       style="font-weight: bold">用户列表
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/echarts.html' %}')"
-                                       style="font-weight: bold">用户注册趋势图
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/map.html' %}')"
-                                       style="font-weight: bold">用户分布图
-                                    </a>
-                                </li>
-                            </ul>
+                            {% for item in request.session.menu_list %}
+                                {% if  '/user/' in item.url %}
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a href="javascript:$('#centerLayout').load('{% static item.html_uri %}')" style="font-weight: bold">{{ item.title }}</a></li>
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -93,13 +95,13 @@
                     </div>
                     <div id="dds" class="panel-collapse collapse ">
                         <div class="panel-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li>
-                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/article.html' %}')"
-                                       style="font-weight: bold">文章列表
-                                    </a>
-                                </li>
-                            </ul>
+                            {% for item in request.session.menu_list %}
+                                {% if  '/article/' in item.url %}
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a href="javascript:$('#centerLayout').load('{% static item.html_uri %}')" style="font-weight: bold">{{ item.title }}</a></li>
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -114,13 +116,13 @@
                     </div>
                     <div id="dd" class="panel-collapse collapse ">
                         <div class="panel-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li>
-                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/album.html' %}')"
-                                       style="font-weight: bold">专辑列表
-                                    </a>
-                                </li>
-                            </ul>
+                            {% for item in request.session.menu_list %}
+                                {% if  '/album/' in item.url %}
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a href="javascript:$('#centerLayout').load('{% static item.html_uri %}')" style="font-weight: bold">{{ item.title }}</a></li>
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -136,17 +138,36 @@
                     <div id="cc" class="panel-collapse collapse ">
                         <div class="panel-body">
                             <!--通过load方法加载轮播图管理的页面-->
+                             {% for item in request.session.menu_list %}
+                                {% if  '/banner/' in item.url %}
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a href="javascript:$('#centerLayout').load('{% static item.html_uri %}')" style="font-weight: bold">{{ item.title }}</a></li>
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <a href="#dd" data-toggle="collapse" data-parent="#accordion">
+                                <h4>管理员管理</h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="aa" class="panel-collapse collapse ">
+                        <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
                                 <li>
-                                    <a href="javascript:$('#centerLayout').load('{% static 'static_html/banner.html' %}')"
-                                       style="font-weight: bold">轮播图列表
+                                    <a href="javascript:$('#centerLayout').load('{% static '' %}')"
+                                       style="font-weight: bold">管理员列表
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <!--右边-->

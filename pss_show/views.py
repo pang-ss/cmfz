@@ -1,31 +1,21 @@
-import datetime
-
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import re
 from redis import Redis
-
-from pss_show.models import TPicture, TUser
-
+from pang_cmfz.settings import PERMISSION_LIST
+from rbac.models import UserInfo
+from rbac.service.init_permission import init_permission
 redis = Redis(host='localhost',port=6379)  # 连接redis数据库
-
-# Create your views here.
 from django.views.decorators.csrf import csrf_exempt
-
 from pang_cmfz import settings
 from utils.random_code import Getcode
 from utils.send_mess import YunPian
 
 
 def index(request):
-    # # 判断是否登录
-    # res = request.session.get("islogin")
-    # if res:
-    #     # 登录返回首页
-    #     return render(request, "index.html")
-    # # 未登录返回登录页面
-    # return redirect('pss_show:login')
-    return render(request, "index.html")
+    per_list = request.session.get(PERMISSION_LIST)
+    print("index",per_list)
+    return render(request, "index.html", {"per_list":per_list})
 
 
 def login(request):
@@ -67,23 +57,23 @@ def get_code(request):
 def loginlogic(request):
     mobile = request.POST.get('mobile')
     code = request.POST.get('code')
-    username = request.POST.get('username')
-    ret = re.match(r"^.{2,}$", username)
-    if ret:
-        res = redis.get(mobile+"02")
-        print(res)
-        print(code)
-        # 有值判断是否相等
-        if res:
-            if res.decode('ascii') == code:
-                # 通过存入数据库返回首页
-                request.session['islogin'] = True
-                res = TUser.objects.create(username=username,phone=mobile)
-                if res:
-                    return HttpResponse('ok')
-            return HttpResponse('验证码输入错误')
-        return HttpResponse('验证码过期')
-    return HttpResponse('用户名不符合')
+    name = request.POST.get('username')
+    res = redis.get(mobile+"02")
+    print(res)
+    print(code)
+    # 有值判断是否相等
+    if res:
+        if res.decode('ascii') == code:
+            user = UserInfo.objects.filter(name=name).first()
+            if not user:
+                return render(request, "login.html", {"msg": "用户名或密码不正确"})
+            # 完成权限相关的操作
+            init_permission(user, request)
+            # 用户名的欢迎
+
+            return HttpResponse('ok')
+        return HttpResponse('验证码输入错误')
+    return HttpResponse('验证码过期')
 
 
 

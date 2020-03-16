@@ -140,7 +140,7 @@ def edit_album(request):
     return HttpResponse('ok')
 
 
-# 修改章节
+# 修改专辑
 @csrf_exempt
 def change_album(request):
     id = request.POST.get('id')

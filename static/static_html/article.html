@@ -15,19 +15,20 @@
             //multiselect: true,
             colNames: ["编号", "内容", "标题", "状态", "上传时间", "发布时间", "操作"],
             colModel: [
-                {name: "id", hidden: true,align:"center",},
-                {name: "content",hidden: true,align:"center",},
-                {name: "title",align:"center",},
-                {name: "status",align:"center",},
-                {name: "upload_time",align:"center",},
-                {name: "release_time",align:"center",},
+                {name: "id", hidden: true, align: "center",},
+                {name: "content", hidden: true, align: "center",},
+                {name: "title", align: "center",},
+                {name: "status", align: "center",},
+                {name: "upload_time", align: "center",},
+                {name: "release_time", align: "center",},
                 {
                     name: "option",
-                    align:"center",
+                    align: "center",
                     formatter: function (cellvalue, options, rowObject) {//JSON.stringify(rowObject).replace(/"/g, '&quot;
                         var result = '';
-                        result += "<a href='javascript:void(0)' onclick=\"showModel('" + rowObject.id + "')\" class='btn btn-lg' title='查看详情'> <span class='glyphicon glyphicon-th-list'>编辑</span></a>" +
-                            "<a href='javascript:void(0)' onclick=\"delModel('" + rowObject.id + "')\" class='btn btn-lg' title='删除'> <span class='glyphicon glyphicon-king'>删除</span></a>";
+                        var per = articleCheckPer('/article/edit_article/')
+                        result += "<a href='javascript:void(0)' " + per + " onclick=\"showModel('" + rowObject.id + "')\" class='btn btn-lg' title='查看详情'> <span class='glyphicon glyphicon-th-list'>编辑</span></a>" +
+                            "<a href='javascript:void(0)' " + per + " onclick=\"delModel('" + rowObject.id + "')\" class='btn btn-lg' title='删除'> <span class='glyphicon glyphicon-king'>删除</span></a>";
                         return result;
                     }
                 },
@@ -36,7 +37,7 @@
 
     });
 
-    // 添加文章模态框展示
+    // 添加文章模态框展示 TODO 待处理
     function showAddArticle() {
         // 将表单相关的信息清空
         $("#addArticleFrom")[0].reset();
@@ -66,9 +67,9 @@
             data: $("#addArticleFrom").serialize(),     // 获取表单数据
             success: function (resp) {
                 // 根据后台返回的状态码进行不同的处理
-                if(resp==="ok"){
+                if (resp === "ok") {
                     $("#myModal").modal('hide');
-                }else{
+                } else {
                     alert("保存失败")
                 }
             }
@@ -84,9 +85,9 @@
         $("#upload_time").val(data.upload_time);
         $("#release_time").val(data.release_time);
         //判断状态的值
-        if(data.status==="展示"){
+        if (data.status === "展示") {
             $("#status").val("1");
-        }else if(data.status==="不展示"){
+        } else if (data.status === "不展示") {
             $("#status").val("2");
         }
         //设置模态框显示
@@ -105,7 +106,7 @@
         console.log(data.content);
         KindEditor.html("#editor_id", data.content);
 
-        $("#modal_footer").html('<button type="button" class="btn btn-primary" onclick="changeArticle('+id+')">保存</button>\n' +
+        $("#modal_footer").html('<button type="button" class="btn btn-primary" onclick="changeArticle(' + id + ')">保存</button>\n' +
             '<button type="button" class="btn btn-warning" data-dismiss="modal">取消</button>')
     }
 
@@ -115,12 +116,12 @@
             url: "/article/change_article/",
             type: "get",
             datatype: "json",
-            data: $("#addArticleFrom").serialize()+"&id="+id,     // 获取表单数据
+            data: $("#addArticleFrom").serialize() + "&id=" + id,     // 获取表单数据
             success: function (resp) {
                 // 根据后台返回的状态码进行不同的处理
-                if(resp==="ok"){
+                if (resp === "ok") {
                     $("#myModal").modal('hide');
-                }else{
+                } else {
                     alert("保存失败")
                 }
             }
@@ -128,12 +129,20 @@
 
     }
 
-   //点击表格内删除按钮
+    //点击表格内删除按钮
     function delModel(num) {
         jQuery("#articleTable").jqGrid('delGridRow', num, {
             reloadAfterSubmit: true,
             closeAfterEdit: true
         });
+    }
+
+    function articleCheckPer(uri) {
+        if (session_per_list.includes(uri)) {
+            return '';
+        } else {
+            return per = 'disabled style="cursor:not-allowed"';
+        }
     }
 
 </script>
@@ -172,13 +181,13 @@
                             <input type="text" name="title" id="title" placeholder="请输入标题" class="form-control">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-1 control-label">上传时间</label>
                         <div class="col-sm-5">
                             <input type="date" name="upload_time" id="upload_time" class="form-control">
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-1 control-label">发布时间</label>
                         <div class="col-sm-5">
                             <input type="date" name="release_time" id="release_time" class="form-control">
