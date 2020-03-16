@@ -18,7 +18,7 @@ def index(request):
     per_list = request.session.get(PERMISSION_LIST)
     # 取出session中的name返回前端
     name = request.session.get("username")
-    print("index", per_list)
+    # print("index", per_list)
     print(name)
     return render(request, "index.html", {"per_list": per_list, "name": name})
 

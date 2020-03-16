@@ -27,7 +27,7 @@ class CheckPermission(MiddlewareMixin):
         ]
         current_url = request.path_info
         per_list = request.session.get(PERMISSION_LIST)
-        print("per_list",per_list)
+        # print("per_list",per_list)
         for url in valid_url_list:
             if re.findall(url, current_url):
                 return None
