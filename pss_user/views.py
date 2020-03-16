@@ -87,7 +87,9 @@ def get_map(request):
     if data:
         data = eval(data.decode())
         return JsonResponse(data, safe=False)
-        # 通过用户的地区字段进行查询并求数量   地区必须直辖市或者省
+    # 通过用户的地区字段进行查询并求数量   地区必须直辖市或者省
+    # TUser.object.values("address").annotate(count("address"))
+    # 返回值[{"河南"，"27"},{"河北"，"10"}]
     c1 = TUser.objects.filter(address="北京").count()
     c2 = TUser.objects.filter(address="天津").count()
     c3 = TUser.objects.filter(address="上海").count()

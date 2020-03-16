@@ -28,7 +28,6 @@
         }
         $(function () {
             $('#getcode').click(function () {
-                alert();
                 var mobile = $('#inputphone').val();
                 $.ajax({
                     url:"{% url 'pss_show:getcode' %}",
@@ -59,6 +58,8 @@
                             alert("验证码输入错误,请重新输入")
                         }else if(resp === "验证码过期"){
                             alert("验证码过期,请重新获取")
+                        }else if(resp === "用户名错误"){
+                            alert("没有查询到此用户名，请重试")
                         }else if(resp === "ok"){
                             window.location.href = '{% url "pss_show:index" %}'
                         }
